@@ -1,0 +1,233 @@
+<html lang="en">
+
+{{> head}}
+
+<body class="sb-nav-fixed">
+    {{> qamHeader}}
+    <div class="container py-5" style="position: fixed; top: 8%; margin-left: 81%;">
+        <p style="margin-bottom: 0%;"><label>Sort By:</label></p>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <form method="post" action='/qam/qamViewCategoryDetail'>
+                <input type="hidden" name="idCategory" value="{{idCategory}}">
+                <input type="hidden" name="sortBy" value="like" />
+                <button type="submit" class="btn btn-secondary">Most Likes</button>
+            </form>
+            <form method="post" action='/qam/qamViewCategoryDetail'>
+                <input type="hidden" name="idCategory" value="{{idCategory}}">
+                <input type="hidden" name="sortBy" value="comment" />
+                <button type="submit" class="btn btn-secondary">Most Comments</button>
+            </form>
+            <form method="post" action='/qam/qamViewCategoryDetail'>
+                <input type="hidden" name="idCategory" value="{{idCategory}}">
+                <input type="hidden" name="sortBy" value="time" />
+                <button type="submit" class="btn btn-secondary">Latest Time</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="margin: 3% 30%;">
+            {{#each listFiles}}
+            <div class="container mt-5"
+                style=" border-radius: 13px; margin-bottom: 3% ; background-color: rgba(225, 230, 238, 0.481);">
+                <div class="row">
+                    <div class="col">
+                        <div class="row" style="margin-left: 1px;">
+                            <ul class="list-group mt-99 text-white">
+                                <li class="list-group-item d-flex justify-content-between align-content-center"
+                                    style="width: 700px">
+                                    <div class="d-flex flex-row">
+                                        {{#if idea.annonymously}}
+                                        <img src="https://img.icons8.com/color/100/000000/folder-invoices.png"
+                                            width="60" height="60" />
+                                        {{else}}
+                                        <img class="rounded-circle" src="/uploads/staff/{{idea.author.img}}"
+                                            width="60px" height="60px">
+                                        {{/if}}
+                                        <div class="ml-5 mt-3" style="margin-left: 11px;">
+                                            <h1> {{idea.name}}</h1>
+                                            {{#if idea.annonymously}}
+                                            <span>- {{dateFormat idea.time "MMMM DD, YYYY HH:mm:ss"}}</span> <br>
+                                            {{else}}
+                                            <span> {{idea.author.name}}</span> <span>- {{dateFormat idea.time "MMMM DD,
+                                                YYYY
+                                                HH:mm:ss"}}</span> <br>
+                                            {{/if}}
+                                            <ul style="margin-left: -60px; margin-top: 5px;">
+                                                {{#each value}}
+                                                <li>
+                                                    <p><a href="../../{{../this.linkValue}}/{{this}}">{{this}}</a></p>
+                                                </li>
+                                                {{/each}}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <div class="btn " style="font-size: 15px; border: none;" /disabled>
+                                    <i class="far fa-thumbs-up"></i>
+                                    <i>{{idea.like}}</i>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="btn " type="submit" style="font-size: 15px; border: none;" /disabled>
+                                    <i class="far fa-thumbs-down"></i>
+                                    <i>{{idea.dislike}}</i>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="btn " type="submit" style="font-size: 15px; border: none;" /disabled>
+                                    <i class="fa fa-comment" style=" color: #6a6e72;"></i>
+                                    <i>{{idea.comments.length}}</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col">
+                        <div style="width: 700px">
+                            {{#ifEquals idea.comments.length 0}}
+                            {{else}}
+                            <button class="see-less"
+                                style=" font-size: 1.2rem; border: none; color:#3e5745; background: #e2e3e4;border-radius: 5px;">See
+                                Less...</button>
+                            <button class="see-more"
+                                style="font-size: 1.2rem; border: none; color:#3e5745; background: #e2e3e4;border-radius: 5px; ">Read
+                                morecomments...</button>
+                            {{/ifEquals}}
+                            {{#each idea.comments}}
+                            <div class="user-comment-box commented-section py-2" style="display:none;">
+                                <div class="second py-2 px-2" style="margin-left: 15px;">
+                                    <ul class="media-list">
+                                        <li class="media">
+                                            <div class="pull-left">
+                                                {{#if this.annonymously}}
+                                                <img class="rounded-circle" src="/images/user.png" width="40px"
+                                                    height="40px" />
+                                                {{else}}
+                                                <img class="rounded-circle" src="/uploads/staff/{{this.author.img}}"
+                                                    width="40px" height="40px">
+                                                {{/if}}
+                                            </div>
+                                            <div class="media-body">
+                                                <h3>
+                                                    {{#if this.annonymously}}
+                                                    {{else}}
+                                                    {{this.author.name}}
+                                                    {{/if}}
+                                                </h3>
+                                                <div class="well well-lg" style="width: 600px; padding: 10px;">
+                                                    <p style="font-size: medium; margin:0; text-align: justify;">
+                                                        {{this.comment}}
+                                                    </p>
+                                                </div>
+                                                <div class="pull-right" style="margin-top: -3%;">
+                                                    <img src="/images/images.png" width="10px" height="10px">
+                                                    <span style="width: 50px;">
+                                                        <script>
+                                                            var d1 = new Date("{{this.time}}");
+                                                            var d2 = Date.now();
+                                                            var diff = Math.floor((d2 - d1) / 1000 / 60)
+                                                            if (diff < 60) {
+                                                                document.write(diff + " minutes ago");
+                                                            } else {
+
+                                                                diff = Math.floor(diff / 60);
+                                                                if (diff < 24) {
+                                                                    document.write(diff + " hours ago");
+                                                                } else {
+                                                                    diff = Math.floor(diff / 24);
+                                                                    if (diff < 365) {
+                                                                        document.write(diff + " days ago");
+                                                                    }
+                                                                    else {
+                                                                        diff = Math.floor(diff / 365);
+                                                                        document.write(diff + " years ago");
+                                                                    }
+                                                                }
+                                                            }
+                                                        </script>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <center>
+        <div aria-label="Page navigation example" style="margin-left: 50%; margin-top: -5%">
+            <ul class="pagination">
+                <li class="page-item">
+                    <form method="post" action='/qam/qamViewCategoryDetail'>
+                        <input type="hidden" name="idCategory" value="{{idCategory}}">
+                        {{#ifEquals page 1}}
+                        <input type="hidden" name="noPage" value="1">
+                        {{else}}
+                        <input type="hidden" name="noPage" value="{{#minus page 1}} {{/minus}}">
+                        {{/ifEquals}}
+                        <button type="submit" class="page-link" style="width: 40px; height: 40px;"><span
+                                aria-hidden="true">&laquo;</span></button>
+                    </form>
+                </li>
+                {{#times noPage}}
+                <li class="page-item">
+                    <form method="post" action='/qam/qamViewCategoryDetail'>
+                        <input type="hidden" name="idCategory" value="{{../idCategory}}">
+                        <input type="hidden" name="noPage" value="{{this}}">
+                        {{#ifEquals ../page this}}
+                        <button type="submit" class="page-link" style="width: 40px; height: 40px; background-color: #03d1fa52;">{{this}}</button>
+                        {{else}}
+                        <button type="submit" class="page-link" style="width: 40px; height: 40px;">{{this}}</button>
+                        {{/ifEquals}}
+                    </form>
+                </li>
+                {{/times}}
+                <li class="page-item">
+                    <form method="post" action='/qam/qamViewCategoryDetail'>
+                        <input type="hidden" name="idCategory" value="{{idCategory}}">
+                        {{#ifEquals page noPage}}
+                        <input type="hidden" name="noPage" value="{{page}}">
+                        {{else}}
+                        <input type="hidden" name="noPage" value="{{#plus page 1}} {{/plus}}">
+                        {{/ifEquals}}
+                        <button type="submit" class="page-link" style="width: 40px; height: 40px;"><span aria-hidden="true">&raquo;</span></button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </center>
+</body>
+<script>
+    $(function () {
+        $(".see-less").hide();
+        $(".see-more").click(function (e) { // click event for load more
+            e.preventDefault();
+            $(this).siblings(".user-comment-box:hidden").slice(-4).show(); // select next 5 hidden divs and show them
+            if ($(this).siblings(".user-comment-box:hidden").length == 0) {
+                $(this).hide();
+            }
+            if ($(this).siblings(".user-comment-box").length != 0) {
+                $(this).siblings(".see-less").show();
+            }
+        });
+        $(".see-less").click(function (e) { // click event for load more
+            e.preventDefault();
+            $(this).hide();
+            $(this).siblings(".user-comment-box").hide();
+            $(this).siblings(".see-more").show();
+        });
+    });
+</script>
+
+</html>

@@ -1,0 +1,89 @@
+<html lang="en">
+
+{{> head}}
+
+<body class="sb-nav-fixed">
+  {{> qamHeader}}
+  <div class="container py-5" style="margin-top: 5%; margin-left: 15%">
+    <center>
+      <div class="form-group">
+        <label>Search by Name:</label>
+        <div class="input-group">
+          <a href="/qam/qamAddCategory" class="btn btn-success" style="margin-left: 5%;">
+            <span class="glyphicon glyphicon-plus"></span>
+            <span><strong>Add new category</strong></span>
+          </a>
+          <form class="form btn-group align-top" method="post" action="/qam/qamSearchCategory"
+            style="margin-left: 20%; width: 40%;  flex: none;">
+            <input type="search" name="keyword" class="form-control rounded"
+              placeholder="Search by name " aria-label="Search" aria-describedby="search-addon" />
+            <button type="submit" class="btn btn-success">Search</button>
+          </form>
+        </div>
+      </div>
+    </center>
+    <div class="e-panel card">
+      <div class="card-body">
+        <div class="card-title">
+        </div>
+        <div class="e-table">
+          <div class="table-responsive table-lg mt-3">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each listCompare}}
+                <tr>
+                  <td class="text-nowrap align-middle" style="text-decoration: underline">
+                    <a href="/qam/qamViewCategoryDetail?id={{category._id}}">
+                      {{category.name}}
+                    </a>
+                  </td>
+                  <td class="text-nowrap align-middle">
+                      {{category.description}}
+                  </td>
+                  <td class="text-center align-middle">
+                    <div class="btn-group align-top">
+                      <a href="/qam/qamEditCategory?id={{category._id}}" class="btn btn-success">
+                        <span class="glyphicon glyphicon-edit"></span>
+                        <span><strong>Edit</strong></span>
+                      </a>
+                      <a href="/qam/qamDeleteCategory?id={{category._id}}" class="btn btn-danger"
+                        onclick="return confirm('Are you sure to delete this category?')">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        <span><strong>Delete</strong></span>
+                      </a>
+                      <a href="/qam/downloadZip?id={{category._id}}" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-book"></span>
+                        <span><strong>ZIP</strong></span>
+                      </a>
+                      {{#if compare}}
+                        <a href="/qam/downloadCSV?id={{category._id}}" class="btn btn-info">
+                          <span class="glyphicon glyphicon-floppy-save"></span>
+                          <span><strong>CSV</strong></span>
+                        </a>
+                      {{else}}
+                        <a href="/qam/downloadCSV?id={{category._id}}" class="btn btn-info" disabled>
+                          <span class="glyphicon glyphicon-floppy-save"></span>
+                          <span><strong>CSV</strong></span>
+                        </a>
+                      {{/if}}
+                    </div>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

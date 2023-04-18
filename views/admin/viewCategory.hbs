@@ -1,0 +1,93 @@
+<html lang="en">
+
+{{> head}}
+
+<body class="sb-nav-fixed">
+    {{> adminHeader}}
+
+    <div class="container py-5" style="margin-top: 4%; margin-left: 15%">
+            <div class="form-group">
+                <label style="margin-left: 25%;">Search by Name:</label>
+                <div class="input-group">
+                    <form class="form btn-group align-top" method="post" action="/admin/searchCategory"
+                        style="margin-left: 25%; width: 40%;  flex: none;">
+                        <input type="search" name="keyword" class="form-control rounded" placeholder="Search by name "
+                            aria-label="Search" aria-describedby="search-addon" />
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </form>
+                </div>
+            </div>
+        <div style="padding: 10px">
+            <select id="select-department" style="padding: 20px; font-size: 16px">
+                <option value="">Select department</option>
+                <option value="it">It</option>
+                <option value="business">Business</option>
+                <option value="design">Design</option>
+            </select>
+        </div>
+        <script>
+            console.log({{{json listCategory}}})
+        </script>
+        <div class="e-panel card">
+            <div class="card-body">
+                <div class="card-title">
+                </div>
+                <div class="e-table">
+                    <div class="table-responsive table-lg mt-3">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Department</th>
+                                    <th>Date Start</th>
+                                    <th>Date End</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody id="r">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function renderView(data) {
+            document.getElementById("r").innerHTML= data?.map(item=> `
+            <tr>
+                <td class="text-nowrap align-middle">
+                    <a href="/admin/viewCategoryDetail?id=${item?._id}}">${item?.name}</a>
+                </td>
+                <td class="text-nowrap align-middle">${item?.description}</td>
+                <td class="text-nowrap align-middle">${item?.department}</td>
+                <td class="text-nowrap align-middle"><span>${item?.dateStart}</span></td>
+                <td class="text-nowrap align-middle"><span>${item?.dateEnd}</span></td>
+                <td class="text-center align-middle">
+                    <div class="btn-group align-top">
+                        <a href="/admin/category/edit?id=${item?.id}" class="btn btn-success">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            <span><strong>Edit date</strong></span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        `).join("")
+        }
+    </script>
+    <script>
+        const data= {{{json listCategory}}};
+        renderView(data);
+    </script>
+    <script>
+        document.getElementById("select-department").addEventListener("change", function(e) {
+            renderView(data?.filter(item=> item?.department=== e.target.value))
+        })
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<header>
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="/staff" style="font-size: 30px;"><b>fpt</b>
+            CO.</a>
+        <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    {{#if loginName}}
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">{{loginName}}<i
+                            class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/staff/changePassword">Change Password</a></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                    {{/if}}
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav" style="font-size: 12px;">
+                        <div class="sb-sidenav-menu-heading" style="font-size: 15px;">New Feeds </div>
+                        <a class="nav-link" href="/staff/viewSubmittedIdeas" style="text-decoration: none;">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            All Submitted Ideas 
+                        </a>
+                        <a class="nav-link" href="/staff/viewMostViewedIdeas"
+                            style="text-decoration: none;">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Most Viewed Ideas
+                        </a>
+                        <a class="nav-link" href="/staff/viewMostComments"
+                            style="text-decoration: none;">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Most Comments Ideas
+                        </a>
+                        <a class="nav-link" href="/staff/viewLastestIdeas"
+                            style="text-decoration: none;">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Lastest Ideas
+                        </a>
+                        <a class="nav-link" href="/staff/viewLatestComments"
+                            style="text-decoration: none;">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Lastest Comments
+                        </a>
+                    </div>
+                    <div class="nav" style="font-size: 12px;">
+                        <div class="sb-sidenav-menu-heading" style="font-size: 15px;">Others</div>
+                        <a class="nav-link" href="/staff/viewStaff" style="text-decoration: none;">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Staff
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>

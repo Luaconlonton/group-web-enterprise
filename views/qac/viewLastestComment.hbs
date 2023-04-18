@@ -1,0 +1,187 @@
+<html lang="en">
+<style>
+    .dropbtn {
+        background-color: #3498DB;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropbtn:hover,
+    .dropbtn:focus {
+        background-color: #2980B9;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content input {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown input:hover {
+        background-color: #ddd;
+    }
+
+    .show {
+        display: block;
+    }
+</style>
+{{> head}}
+
+<body class="sb-nav-fixed">
+    {{> qacHeader}}
+    <div class="row">
+        <div class="col" style="margin: 5% 30%;">
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">Latest by ↓</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <form action="/qac/viewLastestComment" method="POST">
+                        {{#each distance5_comments}}
+                        <input type="submit" name="last" value="{{this}}">
+                        <br>
+                        {{/each}}
+                    </form>
+                </div>
+            </div>
+            {{#each lastComments_detail}}
+            <div class="container py-5" style="margin-bottom: 3% ; background-color: rgba(225, 230, 238, 0.481);">
+                <div class="row">
+                    <div class="col">
+                        <div class="row" style="margin-left: 1px;">
+                            <ul class="list-group mt-99 text-white">
+                                <li class="list-group-item d-flex justify-content-between align-content-center"
+                                    style="width: 700px">
+                                    <div class="d-flex flex-row">
+                                        <img src="https://img.icons8.com/color/100/000000/folder-invoices.png"
+                                            width="70" height="60" />
+                                        <div class="ml-1">
+                                            <h1><b>Idea name: </b>{{name}}</h1>
+                                            <span style="font-size: 12px;"><b>Time: </b>{{time}}</span>
+                                            <br>
+                                            <b style="font-size: 12px; margin-top: 10px; margin-bottom: 10px;">Document:
+                                            </b>
+                                            {{#each value}}
+                                            <span style="font-size: 12px; margin-top: 3px; ">
+                                                <a href="../../{{../this.linkValue}}/{{this}}">{{this}}</a>
+                                            </span>
+                                            <br>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <div class="btn " style="font-size: 15px; border: none;" /disabled>
+                                    <i class="far fa-thumbs-up"></i>
+                                    <i>{{n_likes}}</i>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="btn " type="submit" style="font-size: 15px; border: none;" /disabled>
+                                    <i class="far fa-thumbs-down"></i>
+                                    <i>{{n_dislikes}}</i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div style="font-weight: 900px; font-size: 1.2rem; margin-top: 3px; border: none;">
+                                    {{comment_len}} Comments
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="well" style="width: 700px">
+                            <div class="user-comment-box commented-section py-2"
+                                style="border-bottom: 1px dotted #ccc; ">
+                                <div class="second py-2 px-2">
+                                    <p style="font-size:medium; text-align: justify;">
+                                        {{#if this.annonymously}}
+
+                                        <b>Annonymously - </b>
+                                        {{else}}
+
+                                        <b>{{author.name}} - </b>
+                                        {{/if}}
+                                        <script>
+                                            var d1 = new Date("{{time}}");
+                                            var d2 = Date.now();
+                                            var diff = Math.floor((d2 - d1) / 1000 / 60)
+                                            if (diff < 60) {
+                                                document.write(diff + " minutes ago");
+                                            } else {
+
+                                                diff = Math.floor(diff / 60);
+                                                if (diff < 24) {
+                                                    document.write(diff + " hours ago");
+                                                } else {
+                                                    diff = Math.floor(diff / 24);
+                                                    if (diff < 365) {
+                                                        document.write(diff + " days ago");
+                                                    }
+                                                    else {
+                                                        diff = Math.floor(diff / 365);
+                                                        document.write(diff + " years ago");
+                                                    }
+                                                }
+                                            }
+                                        </script>
+                                        <br>
+                                        <span style="font-size: 14px">
+                                            {{comment_content}}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <script>
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

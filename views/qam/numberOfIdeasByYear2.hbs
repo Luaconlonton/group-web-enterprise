@@ -1,0 +1,88 @@
+<html lang="en">
+<script src="https://d3js.org/d3.v6.min.js"></script>
+{{> head}}
+
+<body class="sb-nav-fixed">
+    {{> qamHeader}}
+        <form method="post" action="/qam/numberOfIdeasByYear" style="margin: 4% 15%;">
+        <div class="form-group"></div>
+        <div class="row">
+            <div class='col-md-2'>
+                From: <input type="number" name="from" min="1900" value="2022" class="form-control" />
+            </div>
+            <div class='col-md-2'>
+                To: <input type="number" name="to" min="1900" value="2022" class="form-control" />
+            </div>
+            <div class='col-md-2' >
+                <input type="submit" value="Find" class="btn btn-outline-info" style="margin-top: 7%; width: 70px; height: 35px;" >
+        </div>
+        </div>
+        
+            
+        </form>
+    </div>
+    </div>
+    <div id="container" style="width: 70%; height: 80%; margin: -2% 15%; padding: 0;"></div>
+
+</body>
+
+<script type="text/javascript">
+    anychart.onDocumentReady(function () {
+        // set the data
+        let data = [];
+        data = {{{ listYear }}}
+    console.log(data)
+    // create the chart
+    var chart = anychart.pie();
+    // set the chart title
+    chart.title("Dashboard number of ideas per dep/year");
+    // add the data
+    chart.data(data);
+    // set legend position
+    chart.legend().position("right");
+    // set items layout
+    chart.legend().itemsLayout("vertical");
+    // display the chart in the container
+    chart.container('container');
+    chart.draw();
+    });
+</script>
+
+<script>
+    let data1= (JSON.parse({{{json data}}}))
+    let groupedArrays = {};
+    data1.forEach((element) => {
+  // lấy ra giá trị của categoryID.department cho phần tử hiện tại
+  let department = element.categoryID.department;
+
+  // nếu mảng mới chưa tồn tại cho department này, tạo một mảng mới
+  if (!groupedArrays[department]) {
+    groupedArrays[department] = [];
+  }
+
+  // thêm phần tử hiện tại vào mảng tương ứng với department của nó
+  groupedArrays[department].push(element);
+});
+console.log(groupedArrays);
+function countPostsByDepartment(posts) {
+  let counts = {};
+  posts.forEach((post) => {
+    let department = post.categoryID.department;
+    if (counts[department]) {
+      counts[department]++;
+    } else {
+      counts[department] = 1;
+    }
+  });
+
+  let result = [];
+  for (let department in counts) {
+    result.push({ department: department, count: counts[department] });
+  }
+
+  return result;
+}
+console.log(countPostsByDepartment(groupedArrays))
+</script>
+
+</html>

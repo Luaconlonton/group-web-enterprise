@@ -1,0 +1,84 @@
+<html lang="en">
+
+{{> head}}
+
+<body class="sb-nav-fixed">
+    {{> adminHeader}}
+    <div class="container py-5" style="margin-top: 4%; margin-left: 15%">
+        <center>
+            <div class="form-group">
+                <label>Search by Name:</label>
+                <div class="input-group">
+                    <a href="/admin/addQualityAssuranceCoordinator" class="btn btn-success" style="margin-left: 5%;">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span><strong>Add new Quality Assurance Coordinator</strong></span>
+                    </a>
+                    <form class="form btn-group align-top" method="post" action="/admin/searchQualityAssuranceCoordinator"
+                        style="margin-left: 20%; width: 40%;  flex: none;">
+                        <input type="search" name="keyword" class="form-control rounded" placeholder="Search by name "
+                            aria-label="Search" aria-describedby="search-addon" />
+                        <button type="submit" class="btn btn-success">Search</button>
+                    </form>
+                </div>
+            </div>
+        </center>
+        <div class="e-panel card" style="width: 90%; margin-left: 5%">
+            <div class="card-body">
+                <div class="card-title">
+                </div>
+                <div class="e-table">
+                    <div class="table-responsive table-lg mt-3">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="max-width" style="text-align:center">Name</th>
+                                    <th class="max-width" style="text-align:center; width: 200px">Avatar</th>
+                                    <th class="max-width" style="text-align:center">Email</th>
+                                    <th class="sortable" style="text-align:center">Date of Birth</th>
+                                    <th style="text-align:center">Address</th>
+                                    <th style="text-align:center">Department</th>
+                                    <th style="text-align:center; width: 100px">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each listQAcoordinator}}
+                                <tr>
+                                    <td class="text-nowrap align-middle">{{name}}</td>
+                                    <td class="text-nowrap align-middle">
+                                        <center><img src="/uploads/QAcoordinator/{{img}}" alt="{{img}}" width="50px" height="70px">
+                                        </center>
+                                    </td>
+                                    <td class="text-nowrap align-middle">{{email}}</td>
+                                    <td class="text-nowrap align-middle"><span>{{dateFormat dateOfBirth "YYYY-MM-DD"}}</span></td>
+                                    <td class="text-nowrap align-middle">{{address}}</td>
+                                    <td class="text-nowrap align-middle">{{department}}</td>
+                                    <td class="text-center align-middle">
+                                        <div class="btn-group align-top">
+                                            <a href="/admin/editQualityAssuranceCoordinator?id={{_id}}" class="btn btn-success">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                                <span><strong>Edit</strong></span>
+                                            </a>
+                                            <a href="/admin/deleteQualityAssuranceCoordinator?id={{_id}}" class="btn btn-danger"
+                                                onclick="return confirm('Are you sure to delete this user?')">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                                <span><strong>Delete</strong></span>
+                                            </a>
+                                            {{!-- <a href="/admin/adminChangePassStaff?id={{_id}}" class="btn btn-warning"
+                                                onclick="return confirm('Are you sure')">
+                                                <span class="glyphicon glyphicon-cog"></span>
+                                                <span><strong>Set Default Pass</strong></span>
+                                            </a> --}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
