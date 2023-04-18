@@ -24,5 +24,8 @@
         "nodemailer": "^6.9.1",
         "nodemon": "^2.0.22",
         "zip-folder": "^1.0.0"
+    },
+    "engines": {
+        "node": ">=14 <15"
     }
 }
