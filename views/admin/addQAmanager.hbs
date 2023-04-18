@@ -2,7 +2,7 @@
 <html lang="en">
 
 {{> head}}
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <body class="sb-nav-fixed">
     {{> adminHeader}}
     <div class="modal-dialog modal-lg" role="document" style="margin-top: 4%; margin-left: 15%">
@@ -70,6 +70,12 @@
         </div>
     </div>
     <script src="/js/validate.js"></script>
+        <script>
+        let errors = {{{json error}}}
+        if (errors == true){
+            swal("Hello world!").then(()=>{errors=false})
+        }
+    </script>
 </body>
 
 </html>

@@ -66,45 +66,49 @@ exports.addQAmanager = async(req, res) => {
     res.render('admin/addQAmanager', { loginName: req.session.email });
 }
 exports.doAddQAmanager = async(req, res) => {
-    //console.log(req.body)
-    let newQAmanager;
-    if (req.file) {
-        newQAmanager = new QAmanager({
-            name: req.body.name,
-            email: req.body.email,
-            dateOfBirth: new Date(req.body.date),
-            address: req.body.address,
-            img: req.file.filename,
-            department: req.body.department
-        })
-    } else {
-        newQAmanager = new QAmanager({
-            name: req.body.name,
-            email: req.body.email,
-            dateOfBirth: new Date(req.body.date),
-            address: req.body.address,
-            department: req.body.department
-        })
-    }
-    let newAccount = new Account({
-        email: req.body.email,
-        password: "12345678",
-        role: "QAmanager"
-    });
+    console.log(12345)
+
     try {
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newAccount.password, salt, (err, hash) => {
-                if (err) throw err;
-                newAccount.password = hash;
-                newAccount = newAccount.save();
+        let newQAmanager;
+        const countQAmanager = await QAmanager.find({ email: req.body.email })
+        if (countQAmanager.length <= 0) {
+            if (req.file) {
+                newQAmanager = new QAmanager({
+                    name: req.body.name,
+                    email: req.body.email,
+                    dateOfBirth: new Date(req.body.date),
+                    address: req.body.address,
+                    img: req.file.filename,
+                    department: req.body.department
+                })
+            } else {
+                newQAmanager = new QAmanager({
+                    name: req.body.name,
+                    email: req.body.email,
+                    dateOfBirth: new Date(req.body.date),
+                    address: req.body.address,
+                    department: req.body.department
+                })
+            }
+            let newAccount = new Account({
+                email: req.body.email,
+                password: "12345678",
+                role: "QAmanager"
             });
-        });
-        newQAmanager = await newQAmanager.save();
-        res.redirect('/admin/viewQualityAssuranceManager');
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(newAccount.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    newAccount.password = hash;
+                    newAccount = newAccount.save();
+                });
+            });
+            newQAmanager = await newQAmanager.save();
+            res.redirect('/admin/viewQualityAssuranceManager');
+        } else { res.render('admin/addQAmanager', { error: true }); }
     } catch (error) {
         console.log(error);
-        return 0;
-        // res.redirect('/admin/viewQualityAssuranceManager');
+        // return 0;
+        res.redirect('/admin/viewQualityAssuranceManager', { error: true });
     }
 }
 exports.editQAmanager = async(req, res) => {
@@ -558,7 +562,8 @@ exports.viewCategoryDetail = async(req, res) => {
         res.render('admin/viewCategoryDetail', { idCategory: id, listFiles: listFiles, sortBy: sortBy, noPage: noPage, page: page, loginName: req.session.email });
     }
 }
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('express-async-handler');
+const { request } = require('http');
 exports.getCategory = asyncHandler(async(req, res) => {
     const lCategories = await category.find({})
     return res.status(200).json(lCategories)
