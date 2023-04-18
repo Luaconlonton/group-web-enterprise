@@ -8,7 +8,7 @@ const { isQAM } = require("../middleware/auth");
 // router.get('/qam_index', isQAM, qamController.getQAM);
 router.get('/qam_index', isQAM, qamController.getQAM);
 router.get('/qam/qamAddCategory', isQAM, qamController.getAddCategory);
-router.post('/qam/doAddCategory', isQAM, qamController.doAddCategory);
+router.post('/qam/doAddCategory', qamController.doAddCategory);
 router.get('/qam/qamViewCategory', isQAM, qamController.getViewCategory);
 router.get('/qam/qamViewCategoryDetail', isQAM, qamController.getCategoryDetail);
 router.post('/qam/qamViewCategoryDetail', isQAM, qamController.getCategoryDetail);

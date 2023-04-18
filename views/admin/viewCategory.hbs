@@ -17,6 +17,44 @@
                     </form>
                 </div>
             </div>
+            <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create a Category</h2>
+            </div>
+            <div class="modal-body">
+                <div class="py-1">
+                    <form class="form" method="POST" action="/admin/doAddCategory">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label>Category Name</label>
+                                            <input class="form-control" type="text" name="name" placeholder="Category Name"required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea class="form-control" rows="5" name="description" placeholder="Description" required/></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col d-flex justify-content-end">
+                                <button class="btn btn-primary" type="submit">Save</button>
+                                <a href="/admin/viewCategory" class="btn btn-warning">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <div style="padding: 10px">
             <select id="select-department" style="padding: 20px; font-size: 16px">
                 <option value="">Select department</option>

@@ -50,6 +50,7 @@
 
 <script>
     let data1= (JSON.parse({{{json data}}}))
+    console.log(data1)
     let groupedArrays = {};
     data1.forEach((element) => {
   // lấy ra giá trị của categoryID.department cho phần tử hiện tại
@@ -64,25 +65,6 @@
   groupedArrays[department].push(element);
 });
 console.log(groupedArrays);
-function countPostsByDepartment(posts) {
-  let counts = {};
-  posts.forEach((post) => {
-    let department = post.categoryID.department;
-    if (counts[department]) {
-      counts[department]++;
-    } else {
-      counts[department] = 1;
-    }
-  });
-
-  let result = [];
-  for (let department in counts) {
-    result.push({ department: department, count: counts[department] });
-  }
-
-  return result;
-}
-console.log(countPostsByDepartment(groupedArrays))
 </script>
 
 </html>

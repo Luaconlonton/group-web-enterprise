@@ -37,7 +37,7 @@ router.get('/admin/deleteQualityAssuranceManager', isAdmin, adminController.dele
 router.get('/admin/editQualityAssuranceManager', isAdmin, adminController.editQAmanager);
 router.post('/admin/doEditQualityAssuranceManager', isAdmin, uploadQAmanager.single('picture'), adminController.doEditQAmanager);
 router.post('/admin/searchQualityAssuranceManager', isAdmin, adminController.searchQAmanager);
-
+router.post("/admin/doAddCategory", isAdmin, adminController.doAddCategory)
 
 
 //QAcoordinator
