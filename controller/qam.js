@@ -403,8 +403,8 @@ exports.getMostViewed = async(req, res) => {
 exports.downloadZip = async(req, res) => {
     let id = req.query.id;
     let aCategory = await Category.findById(id);
-    fs.writeFileSync("./file.txt", JSON.stringify(aCategory), (err)=> {
-        if(err) {
+    fs.writeFileSync("./file.txt", JSON.stringify(aCategory), (err) => {
+        if (err) {
             console.error(err)
             return
         }
@@ -413,16 +413,16 @@ exports.downloadZip = async(req, res) => {
     const zipPath = './my-folder.zip';
     zipFolder("file.txt", zipPath, function(err) {
         if (err) {
-          console.log('Lỗi khi nén tệp: ', err);
+            console.log('Error! ', err);
         } else {
-          console.log('Đã nén tệp thành công!');
-          // Thiết lập header để tải xuống tệp zip
-          res.setHeader('Content-Type', 'application/zip');
-          res.setHeader('Content-Disposition', 'attachment; filename=my-folder.zip');
-          // Tải xuống tệp zip
+            console.log('Success!');
+            // Thiết lập header để tải xuống tệp zip
+            res.setHeader('Content-Type', 'application/zip');
+            res.setHeader('Content-Disposition', 'attachment; filename=my-folder.zip');
+            // Tải xuống tệp zip
         }
         return res.download(zipPath)
-      });
+    });
 }
 
 exports.downloadCSV = async(req, res) => {
@@ -470,14 +470,14 @@ exports.downloadCSV = async(req, res) => {
 }
 
 exports.numberOfIdeasByYear = async(req, res) => {
-    
-        let noIdeas = await idea.find({});
-        res.render('qam/numberOfIdeasByYear', { listYear: JSON.stringify(noIdeas), loginName: req.session.email })  
+
+    let noIdeas = await idea.find({});
+    res.render('qam/numberOfIdeasByYear', { listYear: JSON.stringify(noIdeas), loginName: req.session.email })
 }
 
 exports.numberOfIdeasByYear2 = async(req, res) => {
-    const idea= await ideas.find()
-    .populate("categoryID", "department")
+    const idea = await ideas.find()
+        .populate("categoryID", "department")
     res.render('qam/numberOfIdeasByYear2', { data: JSON.stringify(idea), loginName: req.session.email })
 }
 
