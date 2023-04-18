@@ -7,7 +7,7 @@ const Comments = require('../models/comments');
 const idea = require('../models/ideas');
 const validation = require('./validation');
 const bcrypt = require('bcryptjs');
-const fs= require("fs")
+const fs = require("fs")
 
 exports.getAdmin = async(req, res) => {
     res.render('admin/admin', { loginName: req.session.email })
@@ -241,16 +241,18 @@ exports.deleteQAcoordinator = async(req, res) => {
     let id = req.query.id;
     let aQAcoordinator = await QAcoordinator.findById(id);
     let email = aQAcoordinator.email;
-    Account.deleteOne({ 'email': email }, (err) => {
-        if (err)
-            throw err;
-        else
-            console.log('Account is deleted');
-    })
-    await QAcoordinator.findByIdAndRemove(id).then(data = {});
 
-    res.redirect('/admin/viewQualityAssuranceCoordinator');
+    try {
+        await Account.deleteOne({ 'email': email });
+        await QAcoordinator.findByIdAndRemove(id);
+        console.log('QA coordinator is deleted');
+        res.redirect('/admin/viewQualityAssuranceCoordinator');
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal server error" });
+    }
 }
+
 exports.searchQAcoordinator = async(req, res) => {
     const searchText = req.body.keyword;
     //console.log(req.body.keyword);
@@ -336,7 +338,7 @@ exports.doEditStaff = async(req, res) => {
         aStaff.dateOfBirth = new Date(req.body.date);
         aStaff.address = req.body.address;
         aStaff.type = req.body.department
-        aStaff.type= req.body.department
+        aStaff.type = req.body.department
         aStaff = await aStaff.save();
         res.redirect('/admin/viewStaff');
     } catch (error) {
@@ -557,8 +559,8 @@ exports.viewCategoryDetail = async(req, res) => {
     }
 }
 const asyncHandler = require('express-async-handler')
-exports.getCategory= asyncHandler(async (req, res)=> {
-    const lCategories= await category.find({})
+exports.getCategory = asyncHandler(async(req, res) => {
+    const lCategories = await category.find({})
     return res.status(200).json(lCategories)
 })
 
