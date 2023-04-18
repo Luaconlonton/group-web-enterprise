@@ -54,9 +54,9 @@ https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js
     {{> adminHeader}}
     <div class="row">
         <div class="col" style="margin: 5% 30%;">
-            <h1 class="display-1 font-weight-bold" style="text-align:center">Latest Ideas</h1>
+            <h1 class="display-1 font-weight-bold" style="text-align:center;">Latest Ideas</h1>
             <div class="dropdown">
-                <button onclick="myFunction()" class="dropbtn">Sort by ↓</button>
+                <button onclick="myFunction()" class="dropbtn" style="border-radius: 15px; background-color:crimson">Sort by ↓</button>
                 <div id="myDropdown" class="dropdown-content">
                     <div action="/qam/viewLastestIdeas" method="POST">
                         <input onclick="sortBy(1, 1)" type="submit" name="last" value="Time (ASC)">

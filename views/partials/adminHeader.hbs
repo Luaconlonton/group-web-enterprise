@@ -1,16 +1,16 @@
 <header>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="/admin" style="font-size: 30px;"><b>fpt</b>
-            CO.</a>
+        <a class="d-none d-md-inline-block form-inline" href="/admin" style="font-size: 40px; color:black" ><b>University Of Greenwich</b>
+            </a>
         <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
                     {{#if loginName}}
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">{{loginName}}<i
+                        data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 15px; color:brown">{{loginName}}<i
                             class="fas fa-user fa-fw"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="font-size: 10px;">
                         <li><a class="dropdown-item" href="/admin/changePassword">Change Password</a></li>
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
                     </ul>
@@ -19,24 +19,12 @@
             </ul>
         </div>
     </nav>
-    <div id="layoutSidenav">
+    <div id="layoutSidenav" >
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
-                    <div class="nav" style="font-size: 12px;">
-                        <div class="sb-sidenav-menu-heading" style="font-size: 15px;">Maintain system</div>
-                        <a class="nav-link" href="/admin/viewLastestIdeas" style="text-decoration: none;">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Lastest Ideas
-                        </a>
-                        <a class="nav-link" href="/admin/viewLastestIdeas"
-                            style="text-decoration: none;">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Most Viewed Idea
-                        </a>
-                    </div>
-                    <div class="nav" style="font-size: 12px;">
-                        <div class="sb-sidenav-menu-heading" style="font-size: 15px;">Maintain system</div>
+                <div class="sb-sidenav-menu" style="background-color: rgb(19, 5, 53);">
+                    <div class="nav" style="font-size: 15px;">
+                        <div class="sb-sidenav-menu-heading" style="font-size: 20px;">Quality system</div>
                         <a class="nav-link" href="/admin/ViewQualityAssuranceManager" style="text-decoration: none;">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Quality Assurance Manager
@@ -51,11 +39,18 @@
                             Staff
                         </a>
                     </div>
-                    <div class="nav" style="font-size: 12px;">
-                        <div class="sb-sidenav-menu-heading" style="font-size: 15px;">Maintain system</div>
+                    <div class="nav" style="font-size: 15px;">
+                        <div class="sb-sidenav-menu-heading" style="font-size: 20px;">Maintain system</div>
                         <a class="nav-link" href="/admin/viewCategory" style="text-decoration: none;">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Event
+                        </a>
+                    </div>
+                    <div class="nav" style="font-size: 15px;">
+                        <div class="sb-sidenav-menu-heading" style="font-size: 20px;">Ideas</div>
+                        <a class="nav-link" href="/admin/viewLastestIdeas" style="text-decoration: none;">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            All Ideas
                         </a>
                     </div>
                 </div>

@@ -49,11 +49,11 @@
 <body class="sb-nav-fixed">
     {{> qacHeader}}
     <div class="row">
-        <div class="col" style="margin: 5% 30%;">
+        <div class="col" style="margin: 5% 30%; ">
             {{#ifEquals distance5_ideas.length 0}}
             {{else}}
             <div class="dropdown">
-                <button onclick="myFunction()" class="dropbtn">Latest by ↓</button>
+                <button onclick="myFunction()" class="dropbtn" style="border-radius: 15px; background-color:crimson">Latest by ↓</button>
                 <div id="myDropdown" class="dropdown-content">
                     <form action="/qac/viewLastestIdeas" method="POST">
                         {{#each distance5_ideas}}
