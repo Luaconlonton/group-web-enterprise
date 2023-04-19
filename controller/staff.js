@@ -97,8 +97,8 @@ exports.doAddIdea = async(req, res) => {
                             port: 465,
                             secure: true,
                             auth: {
-                                user: 'staffgroup1gw@gmail.com',
-                                pass: 'neymar9701'
+                                user: 'nguyenstafftest1410@gmail.com',
+                                pass: 'Nguyen123'
                             },
                             tls: { rejectUnauthorized: false }
                         });
@@ -117,7 +117,7 @@ exports.doAddIdea = async(req, res) => {
                         }
                         content += '</div> </div>';
                         let mainOptions = {
-                            from: 'staffgroup1gw@gmail.com',
+                            from: 'nguyenstafftest1410@gmail.com',
                             to: qac_emails,
                             subject: 'New submitted idea' + (Math.round(Math.random() * 10000)).toString(),
                             text: 'abc',
@@ -132,7 +132,7 @@ exports.doAddIdea = async(req, res) => {
                         console.log("New Directory created successfully !!");
                     }
                 });
-                res.render('staff/addFileToIdea', { idCategory: idCategory, path: path, loginName: req.session.email });
+                res.render('staff/addIdeas', { idCategory: idCategory, path: path, loginName: req.session.email });
             } else {
                 console.log("Given Directory already exists !!");
                 count += 1;
@@ -361,8 +361,8 @@ exports.doComment = async(req, res) => {
         port: 465,
         secure: true,
         auth: {
-            user: 'tempstaff1123@gmail.com',
-            pass: 'neymar9701'
+            user: 'nguyenstafftest2@gmail.com',
+            pass: 'Nguyen123'
         },
         tls: { rejectUnauthorized: false }
     })
@@ -382,7 +382,7 @@ exports.doComment = async(req, res) => {
     }
     content += '</div> </div>';
     let mainOptions = {
-        from: 'tempstaff1123@gmail.com',
+        from: 'nguyenstafftest2@gmail.com',
         to: staffEmails,
         subject: 'New submitted idea' + (Math.round(Math.random() * 10000)).toString(),
         text: 'abc',
@@ -1063,7 +1063,7 @@ exports.viewMostViewedIdeas = async(req, res) => {
 exports.filterMostViewIdeas = async function(req, res) {
     let listIdeas = await idea.find().populate('comments');
     let n_ideas = listIdeas.length;
-    
+
     let n_last = Number(req.body.last);
     let n_times = n_last;
     if (n_last > n_ideas) {
