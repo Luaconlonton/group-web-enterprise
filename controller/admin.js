@@ -656,9 +656,10 @@ exports.doAddCategory = async(req, res) => {
             console.log("Given Directory already exists !!");
         }
     });
-    await Category.create({
+    await category.create({
         name: req.body.name,
         description: req.body.description,
+        department: req.body.department,
         dateStart: date,
         dateEnd: newDate,
         url: 'public/folder/' + req.body.name
