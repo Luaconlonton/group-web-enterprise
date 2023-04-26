@@ -93,31 +93,28 @@ exports.doAddIdea = async(req, res) => {
                         }
 
                         let transporter = nodemailer.createTransport({
-                            host: 'smtp.gmail.com',
-                            port: 465,
-                            secure: true,
+                            service: "gmail",
                             auth: {
-                                user: 'nguyenstafftest1410@gmail.com',
-                                pass: 'Nguyen123'
-                            },
-                            tls: { rejectUnauthorized: false }
+                                user: "meolua99@gmail.com",
+                                pass: "qvxgxhaojpyajsia"
+                            }
                         });
                         let content = '';
                         content += `
                             <div style="padding: 10px; background-color: #003375">
                                 <div style="padding: 10px; background-color: white;">    
                         `;
-                        content += '<h4 style="color: #0085ff"> From: ' + aStaff.email.toString() + '</h4> <hr>';
+                        content += '<h4 style="color: #0085ff"> From: ' + aStaff?.email?.toString() + '</h4> <hr>';
                         content += '<span style="color: black"> Idea name: ' + ideaName.toString() + '</span><br>';
                         content += '<span style="color: black"> Category name: ' + aCategory.name.toString() + '</span><br>';
                         if (!checkAnnonymously) {
-                            content += '<span style="color: black"> Staff name: ' + aStaff.name.toString() + '</span>';
+                            content += '<span style="color: black"> Staff name: ' + aStaff?.name.toString() + '</span>';
                         } else {
                             content += '<span style="color: black"> Staff name: Annonymously </span>';
                         }
                         content += '</div> </div>';
                         let mainOptions = {
-                            from: 'nguyenstafftest1410@gmail.com',
+                            from: 'meolua99@gmail.com',
                             to: qac_emails,
                             subject: 'New submitted idea' + (Math.round(Math.random() * 10000)).toString(),
                             text: 'abc',
@@ -357,15 +354,12 @@ exports.doComment = async(req, res) => {
 
 
     let transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
+        service: "gmail",
         auth: {
-            user: 'nguyenstafftest2@gmail.com',
-            pass: 'Nguyen123'
-        },
-        tls: { rejectUnauthorized: false }
-    })
+            user: "meolua99@gmail.com",
+            pass: "qvxgxhaojpyajsia"
+        }
+    });
     let content = '';
     content += `
         <div style="padding: 10px; background-color: #003375">
@@ -382,8 +376,8 @@ exports.doComment = async(req, res) => {
     }
     content += '</div> </div>';
     let mainOptions = {
-        from: 'nguyenstafftest2@gmail.com',
-        to: staffEmails,
+        from: 'meolua99@gmail.com',
+        to: qac_emails,
         subject: 'New submitted idea' + (Math.round(Math.random() * 10000)).toString(),
         text: 'abc',
         html: content

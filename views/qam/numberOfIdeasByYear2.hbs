@@ -1,12 +1,16 @@
 <html lang="en">
 <script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js
+"></script>
 {{> head}}
 
 <body class="sb-nav-fixed">
     {{> qamHeader}}
         <form method="post" action="/qam/numberOfIdeasByYear" style="margin: 4% 15%;">
         <div class="form-group"></div>
-        <div class="row">
+        {{!-- <div class="row">
             <div class='col-md-2'>
                 From: <input type="number" name="from" min="1900" value="2022" class="form-control" />
             </div>
@@ -15,7 +19,8 @@
             </div>
             <div class='col-md-2' >
                 <input type="submit" value="Find" class="btn btn-outline-info" style="margin-top: 7%; width: 70px; height: 35px;" >
-        </div>
+        </div> --}}
+        <div id="chart"></div>
         </div>
         
             
@@ -27,25 +32,7 @@
 </body>
 
 <script type="text/javascript">
-    anychart.onDocumentReady(function () {
-        // set the data
-        let data = [];
-        data = {{{ listYear }}}
-    console.log(data)
-    // create the chart
-    var chart = anychart.pie();
-    // set the chart title
-    chart.title("Dashboard number of ideas per dep/year");
-    // add the data
-    chart.data(data);
-    // set legend position
-    chart.legend().position("right");
-    // set items layout
-    chart.legend().itemsLayout("vertical");
-    // display the chart in the container
-    chart.container('container');
-    chart.draw();
-    });
+   
 </script>
 
 <script>
@@ -64,7 +51,74 @@
   // thêm phần tử hiện tại vào mảng tương ứng với department của nó
   groupedArrays[department].push(element);
 });
-console.log(groupedArrays);
+const result = Object.values(
+  Object.values(groupedArrays)[0].reduce((acc, cur) => {
+    const time = new Date(cur.time);
+    const formattedTime = moment(time).format("DD-MM-YYYY");
+    console.log(formattedTime)
+    const key = cur.categoryID.department
+    if (!acc[key]) {
+      acc[key] = { time: formattedTime, count: 0, department: cur.categoryID.department };
+    }
+    acc[key].count++;
+
+    return acc;
+  }, {})
+);
+
+let departments = ["IT", "Business", "Design"];
+for (let i = 0; i < departments.length; i++) {
+  let department = departments[i];
+  let exists = result.some((item) => item.department === department);
+  if (!exists) {
+    let newObject = {
+      "time": "25-04-2023",
+      "count": 0,
+      "department": department
+    };
+    result.push(newObject);
+  }
+}
+
+
+const width = 500;
+      const height = 500;
+      const radius = Math.min(width, height) / 2;
+
+      const svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+      const color = d3.scaleOrdinal()
+        .domain(result.map(d => d.department))
+        .range(d3.schemeSet2);
+
+      const pie = d3.pie()
+        .value(d => d.count);
+
+      const arc = d3.arc()
+        .innerRadius(0)
+        .outerRadius(radius);
+
+      const arcs = svg.selectAll("arc")
+        .data(pie(result))
+        .enter()
+        .append("g")
+        .attr("class", "arc");
+
+      arcs.append("path")
+        .attr("d", arc)
+        .attr("fill", d => color(d.data.department));
+
+      arcs.append("text")
+        .attr("transform", d => "translate(" + arc.centroid(d) + ")")
+        .attr("text-anchor", "middle")
+        .text(d => d.data.department);
+
+
 </script>
 
 </html>

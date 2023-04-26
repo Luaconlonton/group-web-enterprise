@@ -284,44 +284,50 @@ exports.addStaff = async(req, res) => {
 }
 exports.doAddStaff = async(req, res) => {
     let newStaff;
-    if (req.file) {
-        newStaff = new Staff({
-            name: req.body.name,
-            email: req.body.email,
-            dateOfBirth: new Date(req.body.date),
-            address: req.body.address,
-            img: req.file.filename,
-            type: req.body.department,
-            department: req.body.department
-        })
+    const existStaff = await Staff.find({ email: req.body.email })
+    if (existStaff.length > 0) {
+        return res.render('admin/viewStaff', { exist: true });
     } else {
-        newStaff = new Staff({
-            name: req.body.name,
+
+        if (req.file) {
+            newStaff = new Staff({
+                name: req.body.name,
+                email: req.body.email,
+                dateOfBirth: new Date(req.body.date),
+                address: req.body.address,
+                img: req.file.filename,
+                type: req.body.department,
+                department: req.body.department
+            })
+        } else {
+            newStaff = new Staff({
+                name: req.body.name,
+                email: req.body.email,
+                dateOfBirth: new Date(req.body.date),
+                address: req.body.address,
+                type: req.body.department,
+                department: req.body.department
+            })
+        }
+        let newAccount = new Account({
             email: req.body.email,
-            dateOfBirth: new Date(req.body.date),
-            address: req.body.address,
-            type: req.body.department,
-            department: req.body.department
+            password: "12345678",
+            role: "Staff"
         })
-    }
-    let newAccount = new Account({
-        email: req.body.email,
-        password: "12345678",
-        role: "Staff"
-    })
-    try {
-        await bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newAccount.password, salt, (err, hash) => {
-                if (err) throw err;
-                newAccount.password = hash;
-                newAccount = newAccount.save();
+        try {
+            await bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(newAccount.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    newAccount.password = hash;
+                    newAccount = newAccount.save();
+                });
             });
-        });
-        newStaff = await newStaff.save();
-        res.redirect('/admin/viewStaff');
-    } catch (error) {
-        console.log(error);
-        res.redirect('/admin/viewStaff');
+            newStaff = await newStaff.save();
+            res.render('admin/viewStaff', { exist: false });
+        } catch (error) {
+            console.log(error);
+            res.render('admin/viewStaff', { exist: false });
+        }
     }
 }
 exports.editStaff = async(req, res) => {
@@ -344,10 +350,10 @@ exports.doEditStaff = async(req, res) => {
         aStaff.type = req.body.department
         aStaff.type = req.body.department
         aStaff = await aStaff.save();
-        res.redirect('/admin/viewStaff');
+        res.render('admin/viewStaff', { exist: false });
     } catch (error) {
         console.log(error);
-        res.redirect('/admin/viewStaff');
+        res.render('admin/viewStaff', { exist: false });
     }
 }
 exports.deleteStaff = async(req, res) => {
@@ -364,7 +370,7 @@ exports.deleteStaff = async(req, res) => {
     await idea.deleteMany({ 'author': aStaff.id });
     await Comments.deleteMany({ 'author': aStaff.id });
     await Staff.findByIdAndRemove(id).then(data = {});
-    res.redirect('/admin/viewStaff');
+    res.render('admin/viewStaff', { exist: false });
 }
 exports.searchStaff = async(req, res) => {
         const searchText = req.body.keyword;
@@ -376,7 +382,7 @@ exports.searchStaff = async(req, res) => {
 
         //console.log(checkEmpty);
         if (!checkEmpty) {
-            res.redirect('/admin/viewStaff');
+            res.render('admin/viewStaff', { exist: false });
         } else if (checkAlphaName) {
             listStaff = await Staff.find({ name: searchCondition });
         }
@@ -605,7 +611,7 @@ exports.viewLastestIdeas = async(req, res) => {
     res.render('admin/viewLastestIdeas', { lastestIdeas: lastestIdeas, loginName: req.session.email });
 }
 
-
+// add category
 exports.doAddCategory = async(req, res) => {
     const fs = require("fs");
     let date = new Date();
