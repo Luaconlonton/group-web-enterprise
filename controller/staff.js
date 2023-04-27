@@ -104,11 +104,11 @@ exports.doAddIdea = async(req, res) => {
                             <div style="padding: 10px; background-color: #003375">
                                 <div style="padding: 10px; background-color: white;">    
                         `;
-                        content += '<h4 style="color: #0085ff"> From: ' + aStaff?.email?.toString() + '</h4> <hr>';
+                        content += '<h4 style="color: #0085ff"> From: ' + aStaff ? .email ? .toString() + '</h4> <hr>';
                         content += '<span style="color: black"> Idea name: ' + ideaName.toString() + '</span><br>';
                         content += '<span style="color: black"> Category name: ' + aCategory.name.toString() + '</span><br>';
                         if (!checkAnnonymously) {
-                            content += '<span style="color: black"> Staff name: ' + aStaff?.name.toString() + '</span>';
+                            content += '<span style="color: black"> Staff name: ' + aStaff ? .name.toString() + '</span>';
                         } else {
                             content += '<span style="color: black"> Staff name: Annonymously </span>';
                         }

@@ -140,7 +140,8 @@
     </script>
     <script>
         document.getElementById("select-department").addEventListener("change", function(e) {
-            renderView(data?.filter(item=> item?.department=== e.target.value))
+            console.log(e.target.value)
+            renderView(data?.filter(item=> item?.department.toLowerCase()=== e.target.value.toLowerCase()))
         })
         
     </script>
